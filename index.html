@@ -38,10 +38,7 @@
     }
     .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
     .note{font-size:13px;color:var(--muted)}
-    .success,.error{margin-top:14px;padding:10px;border-radius:8px;display:none}
-    .success{background:#0e2a19;color:#9ff3c6;border:1px solid #1d6b49}
-    .error{background:#2a1212;color:#ffc7c7;border:1px solid #6b1d1d}
-    .footer{margin-top:16px;text-align:center;color:var(--muted);font-size:13px}
+    .success{margin-top:14px;padding:10px;border-radius:8px;background:#0e2a19;color:#9ff3c6;border:1px solid #1d6b49;display:none}
   </style>
 </head>
 <body>
@@ -67,10 +64,10 @@
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" />
       </div>
 
-      <!-- Endpoint-ul tău Formspree -->
-      <form id="voteForm" action="https://formspree.io/f/mblpzvrw" method="POST">
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-        <input type="hidden" name="lang" id="langField" value="ro" />
+      <!-- Formular Netlify -->
+      <form name="logo-vote" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="logo-vote">
+        <input type="hidden" name="lang" id="langField" value="ro">
 
         <!-- Q1 -->
         <fieldset>
@@ -144,118 +141,43 @@
         </p>
 
         <div id="msg" class="success"></div>
-        <div id="err" class="error"></div>
       </form>
 
-      <div class="footer">© 2025 Bughy Tech</div>
+      <div class="footer" style="text-align:center;margin-top:16px;color:#a9b2cc;font-size:13px;">
+        © 2025 Bughy Tech
+      </div>
     </div>
   </div>
 
   <script>
-    const langBtns = document.querySelectorAll('.lang-switch button');
-    const introRo  = document.getElementById('intro-ro');
-    const introDe  = document.getElementById('intro-de');
-    const langField= document.getElementById('langField');
+    const langBtns=document.querySelectorAll('.lang-switch button');
+    const introRo=document.getElementById('intro-ro');
+    const introDe=document.getElementById('intro-de');
+    const langField=document.getElementById('langField');
+    const msg=document.getElementById('msg');
 
-    const t = {
-      ro:{
-        q1:'Care logo ți se pare mai potrivit?',
-        q2:'De ce ai ales acest logo?',
-        q3:'Care pare mai modern și profesionist?',
-        q4:'Ce impresie îți transmite logo-ul preferat?',
-        q5:'Sugestii de îmbunătățire (opțional)',
-        submit:'Trimite', reset:'Resetează',
-        gdpr:'Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.',
-        timora:'Timora PRO', flowin:'Flowin',
-        both:'Ambele', none:'Niciunul',
-        feel_modern:'Modern', feel_calm:'Calm',
-        feel_elegant:'Elegant', feel_dynamic:'Dinamic', feel_tech:'Tehnologic',
-        ph_reason:'Răspuns scurt',
-        ph_suggestions:'Opțional',
-        success:'Mulțumim! Răspunsul a fost înregistrat.',
-        error:'Eroare la trimitere. Încearcă din nou.'
-      },
-      de:{
-        q1:'Welches Logo passt besser?',
-        q2:'Warum hast du dieses Logo gewählt?',
-        q3:'Welches wirkt moderner und professioneller?',
-        q4:'Welchen Eindruck vermittelt dir dein bevorzugtes Logo?',
-        q5:'Verbesserungsvorschläge (freiwillig)',
-        submit:'Senden', reset:'Zurücksetzen',
-        gdpr:'Mit dem Absenden stimmst du zu, dass deine Antworten zur Auswertung der Markenpräferenzen verarbeitet werden.',
-        timora:'Timora PRO', flowin:'Flowin',
-        both:'Beide', none:'Keines',
-        feel_modern:'Modern', feel_calm:'Ruhig',
-        feel_elegant:'Elegant', feel_dynamic:'Dynamisch', feel_tech:'Technisch',
-        ph_reason:'Kurze Antwort',
-        ph_suggestions:'Freiwillig',
-        success:'Danke! Deine Antwort wurde gespeichert.',
-        error:'Fehler beim Senden. Bitte versuche es erneut.'
-      }
+    const t={
+      ro:{submit:'Trimite',reset:'Resetează',success:'Mulțumim! Răspunsul a fost înregistrat.'},
+      de:{submit:'Senden',reset:'Zurücksetzen',success:'Danke! Deine Antwort wurde gespeichert.'}
     };
 
     function setLang(code){
-      langBtns.forEach(b=>b.classList.toggle('active', b.dataset.lang===code));
-      introRo.style.display = (code==='ro') ? '' : 'none';
-      introDe.style.display = (code==='de') ? '' : 'none';
-      langField.value = code;
-
+      langBtns.forEach(b=>b.classList.toggle('active',b.dataset.lang===code));
+      introRo.style.display=(code==='ro')?'':'none';
+      introDe.style.display=(code==='de')?'':'none';
+      langField.value=code;
       const d=t[code];
-      document.getElementById('q1-legend').textContent=d.q1;
-      document.getElementById('q2-legend').textContent=d.q2;
-      document.getElementById('q3-legend').textContent=d.q3;
-      document.getElementById('q4-legend').textContent=d.q4;
-      document.getElementById('q5-legend').textContent=d.q5;
       document.getElementById('submitLabel').textContent=d.submit;
       document.getElementById('resetLabel').textContent=d.reset;
-      document.getElementById('gdpr').textContent=d.gdpr;
-      document.getElementById('lbl-choice-timora').textContent=d.timora;
-      document.getElementById('lbl-choice-flowin').textContent=d.flowin;
-      document.getElementById('lbl-modern-timora').textContent=d.timora;
-      document.getElementById('lbl-modern-flowin').textContent=d.flowin;
-      document.getElementById('lbl-modern-both').textContent=d.both;
-      document.getElementById('lbl-modern-none').textContent=d.none;
-      document.getElementById('lbl-feel-modern').textContent=d.feel_modern;
-      document.getElementById('lbl-feel-calm').textContent=d.feel_calm;
-      document.getElementById('lbl-feel-elegant').textContent=d.feel_elegant;
-      document.getElementById('lbl-feel-dynamic').textContent=d.feel_dynamic;
-      document.getElementById('lbl-feel-tech').textContent=d.feel_tech;
-      document.getElementById('reason').placeholder=d.ph_reason;
-      document.getElementById('suggestions').placeholder=d.ph_suggestions;
-      document.getElementById('msg').textContent=d.success;
-      document.getElementById('err').textContent=d.error;
+      msg.textContent=d.success;
     }
 
     langBtns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
     setLang('ro');
 
-    const form=document.getElementById('voteForm');
-    const msg =document.getElementById('msg');
-    const err =document.getElementById('err');
-
-    form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      msg.style.display='none'; err.style.display='none';
-      try{
-        const resp = await fetch(form.action, {
-          method:'POST',
-          headers:{ 'Accept':'application/json' },
-          body:new FormData(form)
-        });
-        const d = t[document.getElementById('langField').value];
-        if(resp.ok){
-          form.reset();
-          msg.textContent = d.success;
-          msg.style.display='block';
-        }else{
-          err.textContent = d.error;
-          err.style.display='block';
-        }
-      }catch(_){
-        const d = t[document.getElementById('langField').value];
-        err.textContent = d.error;
-        err.style.display='block';
-      }
+    document.querySelector('form').addEventListener('submit',()=>{
+      msg.style.display='block';
+      setTimeout(()=>msg.style.display='none',4000);
     });
   </script>
 </body>
