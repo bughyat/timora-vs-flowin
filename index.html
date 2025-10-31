@@ -86,10 +86,10 @@
         <fieldset>
           <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
           <label><input type="radio" name="choice" value="Timora PRO" required>
-            <span id="lbl-choice-timora">Timora PRO</span>
+            <span id="lbl-choice-timora">⏰ Timora PRO</span>
           </label>
           <label><input type="radio" name="choice" value="Flowin">
-            <span id="lbl-choice-flowin">Flowin</span>
+            <span id="lbl-choice-flowin">🌊 Flowin</span>
           </label>
         </fieldset>
 
@@ -118,19 +118,19 @@
           <legend id="q4-legend">Ce impresie îți transmite logo-ul preferat?</legend>
           <div class="row">
             <label><input type="radio" name="feel" value="Modern" required>
-              <span id="lbl-feel-modern">Modern</span>
+              <span id="lbl-feel-modern">✨ Modern</span>
             </label>
             <label><input type="radio" name="feel" value="Calm">
-              <span id="lbl-feel-calm">Calm</span>
+              <span id="lbl-feel-calm">🧘 Calm</span>
             </label>
             <label><input type="radio" name="feel" value="Elegant">
-              <span id="lbl-feel-elegant">Elegant</span>
+              <span id="lbl-feel-elegant">💎 Elegant</span>
             </label>
             <label><input type="radio" name="feel" value="Dinamic">
-              <span id="lbl-feel-dynamic"> Dinamic</span>
+              <span id="lbl-feel-dynamic">⚡ Dinamic</span>
             </label>
             <label><input type="radio" name="feel" value="Tehnologic">
-              <span id="lbl-feel-tech">Tehnologic</span>
+              <span id="lbl-feel-tech">🔧 Tehnologic</span>
             </label>
           </div>
         </fieldset>
@@ -159,7 +159,6 @@
   </div>
 
   <script>
-    // (JavaScript-ul rămâne la fel)
     const langBtns = document.querySelectorAll('.lang-switch button');
     const introRo = document.getElementById('intro-ro');
     const introDe = document.getElementById('intro-de');
@@ -167,6 +166,8 @@
     const form = document.querySelector('form');
     const submitBtn = document.getElementById('submitBtn');
     const submitLabel = document.getElementById('submitLabel');
+    const reasonTextarea = document.getElementById('reason');
+    const suggestionsTextarea = document.getElementById('suggestions');
 
     const translations = {
       ro: {
@@ -176,20 +177,22 @@
         q4: 'Ce impresie îți transmite logo-ul preferat?',
         q5: 'Sugestii de îmbunătățire (opțional)',
         submit: 'Trimite',
-        submitting: ' Se trimite...',
+        submitting: '⏳ Se trimite...',
         reset: 'Resetează',
         gdpr: 'Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.',
-        success: '✓ Mulțumim! Răspunsul a fost înregistrat cu succes! ',
+        success: '✓ Mulțumim! Răspunsul a fost înregistrat cu succes! 🎉',
         error: '⚠ Eroare la trimitere. Te rugăm să încerci din nou.',
-        timora: 'Timora PRO',
-        flowin: 'Flowin',
+        reasonPlaceholder: 'Răspuns scurt',
+        suggestionsPlaceholder: 'Opțional',
+        timora: '⏰ Timora PRO',
+        flowin: '🌊 Flowin',
         both: 'Ambele',
         none: 'Niciunul',
-        modern: ' Modern',
-        calm: ' Calm',
-        elegant: ' Elegant',
-        dynamic: ' Dinamic',
-        tech: 'Tehnologic'
+        modern: '✨ Modern',
+        calm: '🧘 Calm',
+        elegant: '💎 Elegant',
+        dynamic: '⚡ Dinamic',
+        tech: '🔧 Tehnologic'
       },
       de: {
         q1: 'Welches Logo passt besser?',
@@ -198,20 +201,22 @@
         q4: 'Welchen Eindruck vermittelt dir dein bevorzugtes Logo?',
         q5: 'Verbesserungsvorschläge (freiwillig)',
         submit: 'Senden',
-        submitting: 'Wird gesendet...',
+        submitting: '⏳ Wird gesendet...',
         reset: 'Zurücksetzen',
         gdpr: 'Mit dem Absenden stimmst du zu, dass deine Antworten zur Auswertung der Markenpräferenzen verarbeitet werden.',
-        success: '✓ Danke! Deine Antwort wurde erfolgreich gespeichert!',
+        success: '✓ Danke! Deine Antwort wurde erfolgreich gespeichert! 🎉',
         error: '⚠ Fehler beim Senden. Bitte versuche es erneut.',
-        timora: ' Timora PRO',
-        flowin: ' Flowin',
+        reasonPlaceholder: 'Kurze Antwort',
+        suggestionsPlaceholder: 'Freiwillig',
+        timora: '⏰ Timora PRO',
+        flowin: '🌊 Flowin',
         both: 'Beide',
         none: 'Keines',
-        modern: ' Modern',
-        calm: ' Ruhig',
-        elegant: ' Elegant',
-        dynamic: ' Dynamisch',
-        tech: 'Technisch'
+        modern: '✨ Modern',
+        calm: '🧘 Ruhig',
+        elegant: '💎 Elegant',
+        dynamic: '⚡ Dynamisch',
+        tech: '🔧 Technisch'
       }
     };
 
@@ -225,6 +230,8 @@
       langField.value = code;
 
       const t = translations[code];
+      
+      // Actualizează toate textele
       document.getElementById('q1-legend').textContent = t.q1;
       document.getElementById('q2-legend').textContent = t.q2;
       document.getElementById('q3-legend').textContent = t.q3;
@@ -234,6 +241,11 @@
       document.getElementById('resetLabel').textContent = t.reset;
       document.getElementById('gdpr').textContent = t.gdpr;
       
+      // Actualizează placeholder-ele
+      reasonTextarea.placeholder = t.reasonPlaceholder;
+      suggestionsTextarea.placeholder = t.suggestionsPlaceholder;
+      
+      // Actualizează opțiunile cu emoji-uri corecte
       document.getElementById('lbl-choice-timora').textContent = t.timora;
       document.getElementById('lbl-choice-flowin').textContent = t.flowin;
       document.getElementById('lbl-modern-timora').textContent = t.timora;
