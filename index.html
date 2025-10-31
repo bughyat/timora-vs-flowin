@@ -41,12 +41,12 @@
       font-weight:600;transition:transform 0.2s;min-width:120px
     }
     .btn:hover{transform:translateY(-2px)}
+    .btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
     .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
     .note{font-size:13px;color:var(--muted);margin-top:12px}
     .success{
       margin-top:20px;padding:14px;border-radius:10px;display:none;
-      font-weight:500;animation:slideIn 0.3s ease-out;
-      background:#0e2a19;color:#9ff3c6;border:1px solid #1d6b49;
+      font-weight:500;animation:slideIn 0.3s ease-out
     }
     @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
   </style>
@@ -66,34 +66,30 @@
       </p>
 
       <div class="lang-switch">
-        <button type="button" data-lang="ro" class="active">Ro</button>
-        <button type="button" data-lang="de">De</button>
+        <button type="button" data-lang="ro" class="active">🇷🇴 Ro</button>
+        <button type="button" data-lang="de">🇩🇪 De</button>
       </div>
 
       <div class="hero">
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" loading="lazy" />
       </div>
 
-      <!-- MESAJUL DE SUCCES -->
-      <div id="successMsg" class="success" style="display:none"></div>
-
-      <!-- FORMULAR CU ACTION PENTRU A RĂMÂNE PE PAGINĂ -->
-      <form name="logo-vote" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="logo-vote" />
-        <input type="hidden" name="lang" id="langField" value="ro" />
-        
-        <!-- Honeypot pentru spam -->
+      <!-- FORMULARUL CORECTAT: netlify în loc de data-netlify="true" -->
+      <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field">
         <p style="display:none">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
+        
+        <input type="hidden" name="form-name" value="logo-vote" />
+        <input type="hidden" name="lang" id="langField" value="ro" />
 
         <fieldset>
           <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
           <label><input type="radio" name="choice" value="Timora PRO" required>
-            <span id="lbl-choice-timora">Timora PRO</span>
+            <span id="lbl-choice-timora">⏰ Timora PRO</span>
           </label>
           <label><input type="radio" name="choice" value="Flowin">
-            <span id="lbl-choice-flowin">Flowin</span>
+            <span id="lbl-choice-flowin">🌊 Flowin</span>
           </label>
         </fieldset>
 
@@ -131,10 +127,10 @@
               <span id="lbl-feel-elegant">Elegant</span>
             </label>
             <label><input type="radio" name="feel" value="Dinamic">
-              <span id="lbl-feel-dynamic">Dinamic</span>
+              <span id="lbl-feel-dynamic"> Dinamic</span>
             </label>
             <label><input type="radio" name="feel" value="Tehnologic">
-              <span id="lbl-feel-tech">Tehnologic</span>
+              <span id="lbl-feel-tech">🔧 Tehnologic</span>
             </label>
           </div>
         </fieldset>
@@ -163,13 +159,14 @@
   </div>
 
   <script>
-    // DOAR PENTRU SCHIMBAREA LIMBII ȘI MESAJUL DE SUCCES
+    // (JavaScript-ul rămâne la fel)
     const langBtns = document.querySelectorAll('.lang-switch button');
     const introRo = document.getElementById('intro-ro');
     const introDe = document.getElementById('intro-de');
     const langField = document.getElementById('langField');
     const form = document.querySelector('form');
-    const successMsg = document.getElementById('successMsg');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitLabel = document.getElementById('submitLabel');
 
     const translations = {
       ro: {
@@ -179,18 +176,20 @@
         q4: 'Ce impresie îți transmite logo-ul preferat?',
         q5: 'Sugestii de îmbunătățire (opțional)',
         submit: 'Trimite',
+        submitting: ' Se trimite...',
         reset: 'Resetează',
         gdpr: 'Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.',
-        success: '✓ Mulțumim! Răspunsul a fost înregistrat cu succes! 🎉',
+        success: '✓ Mulțumim! Răspunsul a fost înregistrat cu succes! ',
+        error: '⚠ Eroare la trimitere. Te rugăm să încerci din nou.',
         timora: 'Timora PRO',
-        flowin: 'Flowin',
+        flowin: '🌊 Flowin',
         both: 'Ambele',
         none: 'Niciunul',
-        modern: 'Modern',
-        calm: 'Calm',
-        elegant: 'Elegant',
-        dynamic: 'Dinamic',
-        tech: 'Tehnologic'
+        modern: ' Modern',
+        calm: ' Calm',
+        elegant: ' Elegant',
+        dynamic: ' Dinamic',
+        tech: '🔧 Tehnologic'
       },
       de: {
         q1: 'Welches Logo passt besser?',
@@ -199,22 +198,27 @@
         q4: 'Welchen Eindruck vermittelt dir dein bevorzugtes Logo?',
         q5: 'Verbesserungsvorschläge (freiwillig)',
         submit: 'Senden',
+        submitting: '⏳ Wird gesendet...',
         reset: 'Zurücksetzen',
         gdpr: 'Mit dem Absenden stimmst du zu, dass deine Antworten zur Auswertung der Markenpräferenzen verarbeitet werden.',
-        success: '✓ Danke! Deine Antwort wurde gespeichert. 🎉',
-        timora: 'Timora PRO',
-        flowin: 'Flowin',
+        success: '✓ Danke! Deine Antwort wurde erfolgreich gespeichert! 🎉',
+        error: '⚠ Fehler beim Senden. Bitte versuche es erneut.',
+        timora: ' Timora PRO',
+        flowin: ' Flowin',
         both: 'Beide',
         none: 'Keines',
-        modern: 'Modern',
-        calm: 'Ruhig',
-        elegant: 'Elegant',
-        dynamic: 'Dynamisch',
+        modern: ' Modern',
+        calm: ' Ruhig',
+        elegant: ' Elegant',
+        dynamic: ' Dynamisch',
         tech: 'Technisch'
       }
     };
 
+    let currentLang = 'ro';
+
     function setLang(code) {
+      currentLang = code;
       langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === code));
       introRo.style.display = (code === 'ro') ? '' : 'none';
       introDe.style.display = (code === 'de') ? '' : 'none';
@@ -226,7 +230,7 @@
       document.getElementById('q3-legend').textContent = t.q3;
       document.getElementById('q4-legend').textContent = t.q4;
       document.getElementById('q5-legend').textContent = t.q5;
-      document.getElementById('submitLabel').textContent = t.submit;
+      submitLabel.textContent = t.submit;
       document.getElementById('resetLabel').textContent = t.reset;
       document.getElementById('gdpr').textContent = t.gdpr;
       
@@ -241,35 +245,59 @@
       document.getElementById('lbl-feel-elegant').textContent = t.elegant;
       document.getElementById('lbl-feel-dynamic').textContent = t.dynamic;
       document.getElementById('lbl-feel-tech').textContent = t.tech;
-
-      // Actualizează și mesajul de succes dacă este afișat
-      if (successMsg.style.display === 'block') {
-        successMsg.textContent = t.success;
-      }
     }
 
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
     setLang('ro');
 
-    // VERIFICĂ DACA AVEM PARAMETRU DE SUCCES ÎN URL (după trimitere)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('success') === 'true') {
-      const currentLang = document.getElementById('langField').value;
-      successMsg.textContent = translations[currentLang].success;
-      successMsg.style.display = 'block';
+    // AJAX SUBMIT
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
       
-      // Ascunde mesajul după 10 secunde
-      setTimeout(() => {
-        successMsg.style.display = 'none';
-      }, 10000);
-    }
-
-    // ADĂUGĂ PARAMETRU SUCCESS LA FORMULAR PENTRU A AFIȘA MESAJUL
-    form.addEventListener('submit', function() {
-      // Adaugă parametrul success la action URL
-      const formAction = this.getAttribute('action') || '';
-      const separator = formAction.includes('?') ? '&' : '?';
-      this.setAttribute('action', formAction + separator + 'success=true');
+      const t = translations[currentLang];
+      submitBtn.disabled = true;
+      submitLabel.textContent = t.submitting;
+      
+      let successMsg = document.getElementById('successMsg');
+      if (!successMsg) {
+        successMsg = document.createElement('div');
+        successMsg.id = 'successMsg';
+        successMsg.className = 'success';
+        form.appendChild(successMsg);
+      }
+      
+      try {
+        const formData = new FormData(form);
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        });
+        
+        if (response.ok) {
+          successMsg.textContent = t.success;
+          successMsg.style.display = 'block';
+          successMsg.style.background = '#0e2a19';
+          successMsg.style.color = '#9ff3c6';
+          successMsg.style.border = '1px solid #1d6b49';
+          form.reset();
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          setTimeout(() => successMsg.style.display = 'none', 10000);
+        } else {
+          throw new Error('Network error');
+        }
+      } catch (error) {
+        successMsg.textContent = t.error;
+        successMsg.style.display = 'block';
+        successMsg.style.background = '#2a1212';
+        successMsg.style.color = '#ffc7c7';
+        successMsg.style.border = '1px solid #6b1d1d';
+        setTimeout(() => successMsg.style.display = 'none', 5000);
+      } finally {
+        submitBtn.disabled = false;
+        submitLabel.textContent = t.submit;
+      }
     });
   </script>
 </body>
