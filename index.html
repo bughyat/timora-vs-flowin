@@ -43,6 +43,12 @@
     .btn:hover{transform:translateY(-2px)}
     .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
     .note{font-size:13px;color:var(--muted);margin-top:12px}
+    .success{
+      margin-top:20px;padding:14px;border-radius:10px;display:none;
+      font-weight:500;animation:slideIn 0.3s ease-out;
+      background:#0e2a19;color:#9ff3c6;border:1px solid #1d6b49;
+    }
+    @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
@@ -68,8 +74,11 @@
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" loading="lazy" />
       </div>
 
-      <!-- FORMULAR SIMPLU FĂRĂ AJAX -->
-      <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field">
+      <!-- MESAJUL DE SUCCES -->
+      <div id="successMsg" class="success" style="display:none"></div>
+
+      <!-- FORMULAR CU ACTION PENTRU A RĂMÂNE PE PAGINĂ -->
+      <form name="logo-vote" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="logo-vote" />
         <input type="hidden" name="lang" id="langField" value="ro" />
         
@@ -154,11 +163,13 @@
   </div>
 
   <script>
-    // DOAR PENTRU SCHIMBAREA LIMBII - FĂRĂ SUBMIT
+    // DOAR PENTRU SCHIMBAREA LIMBII ȘI MESAJUL DE SUCCES
     const langBtns = document.querySelectorAll('.lang-switch button');
     const introRo = document.getElementById('intro-ro');
     const introDe = document.getElementById('intro-de');
     const langField = document.getElementById('langField');
+    const form = document.querySelector('form');
+    const successMsg = document.getElementById('successMsg');
 
     const translations = {
       ro: {
@@ -170,6 +181,7 @@
         submit: 'Trimite',
         reset: 'Resetează',
         gdpr: 'Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.',
+        success: '✓ Mulțumim! Răspunsul a fost înregistrat cu succes! 🎉',
         timora: 'Timora PRO',
         flowin: 'Flowin',
         both: 'Ambele',
@@ -189,6 +201,7 @@
         submit: 'Senden',
         reset: 'Zurücksetzen',
         gdpr: 'Mit dem Absenden stimmst du zu, dass deine Antworten zur Auswertung der Markenpräferenzen verarbeitet werden.',
+        success: '✓ Danke! Deine Antwort wurde gespeichert. 🎉',
         timora: 'Timora PRO',
         flowin: 'Flowin',
         both: 'Beide',
@@ -228,10 +241,36 @@
       document.getElementById('lbl-feel-elegant').textContent = t.elegant;
       document.getElementById('lbl-feel-dynamic').textContent = t.dynamic;
       document.getElementById('lbl-feel-tech').textContent = t.tech;
+
+      // Actualizează și mesajul de succes dacă este afișat
+      if (successMsg.style.display === 'block') {
+        successMsg.textContent = t.success;
+      }
     }
 
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
     setLang('ro');
+
+    // VERIFICĂ DACA AVEM PARAMETRU DE SUCCES ÎN URL (după trimitere)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      const currentLang = document.getElementById('langField').value;
+      successMsg.textContent = translations[currentLang].success;
+      successMsg.style.display = 'block';
+      
+      // Ascunde mesajul după 10 secunde
+      setTimeout(() => {
+        successMsg.style.display = 'none';
+      }, 10000);
+    }
+
+    // ADĂUGĂ PARAMETRU SUCCESS LA FORMULAR PENTRU A AFIȘA MESAJUL
+    form.addEventListener('submit', function() {
+      // Adaugă parametrul success la action URL
+      const formAction = this.getAttribute('action') || '';
+      const separator = formAction.includes('?') ? '&' : '?';
+      this.setAttribute('action', formAction + separator + 'success=true');
+    });
   </script>
 </body>
 </html>
