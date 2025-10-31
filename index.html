@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Alegerea logo-ului / Logo-Auswahl</title>
-  <meta name="description" content="Sondaj vizual pentru alegerea logo-ului final (Flowin vs Timora PRO)." />
   <style>
     :root{
       --bg:#0b1324; --card:#111a2e; --text:#ffffff; --muted:#c9d1e0;
@@ -74,11 +73,20 @@
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" loading="lazy" />
       </div>
 
-      <form name="logo-vote" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+      <!-- ✅ NETLIFY FORM - TOATE ATRIBUTELE NECESARE -->
+      <form 
+        name="logo-vote" 
+        method="POST" 
+        data-netlify="true" 
+        data-netlify-honeypot="bot-field"
+        netlify
+      >
+        <!-- Honeypot anti-spam -->
         <p style="display:none">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
         
+        <!-- ⚠️ CRITICAL: form-name hidden field -->
         <input type="hidden" name="form-name" value="logo-vote" />
         <input type="hidden" name="lang" id="langField" value="ro" />
 
@@ -87,7 +95,7 @@
           <label><input type="radio" name="choice" value="Timora PRO" required>
             <span id="lbl-choice-timora">⏰ Timora PRO</span>
           </label>
-          <label><input type="radio" name="choice" value="Flowin">
+          <label><input type="radio" name="choice" value="Flowin" required>
             <span id="lbl-choice-flowin">🌊 Flowin</span>
           </label>
         </fieldset>
@@ -102,13 +110,13 @@
           <label><input type="radio" name="modern" value="Timora PRO" required>
             <span id="lbl-modern-timora">Timora PRO</span>
           </label>
-          <label><input type="radio" name="modern" value="Flowin">
+          <label><input type="radio" name="modern" value="Flowin" required>
             <span id="lbl-modern-flowin">Flowin</span>
           </label>
-          <label><input type="radio" name="modern" value="Ambele">
+          <label><input type="radio" name="modern" value="Ambele" required>
             <span id="lbl-modern-both">Ambele</span>
           </label>
-          <label><input type="radio" name="modern" value="Niciunul">
+          <label><input type="radio" name="modern" value="Niciunul" required>
             <span id="lbl-modern-none">Niciunul</span>
           </label>
         </fieldset>
@@ -119,16 +127,16 @@
             <label><input type="radio" name="feel" value="Modern" required>
               <span id="lbl-feel-modern">✨ Modern</span>
             </label>
-            <label><input type="radio" name="feel" value="Calm">
+            <label><input type="radio" name="feel" value="Calm" required>
               <span id="lbl-feel-calm">🧘 Calm</span>
             </label>
-            <label><input type="radio" name="feel" value="Elegant">
+            <label><input type="radio" name="feel" value="Elegant" required>
               <span id="lbl-feel-elegant">💎 Elegant</span>
             </label>
-            <label><input type="radio" name="feel" value="Dinamic">
+            <label><input type="radio" name="feel" value="Dinamic" required>
               <span id="lbl-feel-dynamic">⚡ Dinamic</span>
             </label>
-            <label><input type="radio" name="feel" value="Tehnologic">
+            <label><input type="radio" name="feel" value="Tehnologic" required>
               <span id="lbl-feel-tech">🔧 Tehnologic</span>
             </label>
           </div>
@@ -248,7 +256,7 @@
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
     setLang('ro');
 
-    // AJAX SUBMIT - NO 404 ERROR!
+    // AJAX SUBMIT
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -300,3 +308,34 @@
   </script>
 </body>
 </html>
+```
+
+---
+
+## ✅ **CHECKLIST FINAL:**
+```
+□ Salvează codul de mai sus ca index.html
+□ Click "Enable form detection" în Netlify
+□ Redeploy site-ul (Clear cache and deploy)
+□ Așteaptă 2-3 minute pentru build
+□ Check build logs pentru "Forms detected: logo-vote"
+□ Refresh Netlify Dashboard > Forms
+□ Vezi "logo-vote" form apare!
+□ Test: trimite un vot
+□ Check submissions în dashboard
+```
+
+---
+
+## 🎯 **DUPĂ REDEPLOY, AR TREBUI SĂ VEZI:**
+
+În Netlify Dashboard > Forms:
+```
+┌─────────────────────────────┐
+│ logo-vote                   │
+│ ✓ Active                    │
+│                             │
+│ 0 submissions               │
+│                             │
+│ [Settings] [Export]         │
+└─────────────────────────────┘
