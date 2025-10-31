@@ -48,6 +48,19 @@
       margin-top:20px;padding:14px;border-radius:10px;display:none;
       font-weight:500;animation:slideIn 0.3s ease-out
     }
+    .error-message {
+      color: #ff6b6b;
+      font-size: 14px;
+      margin-top: 8px;
+      padding: 8px;
+      background: #2a1212;
+      border: 1px solid #6b1d1d;
+      border-radius: 6px;
+      display: none;
+    }
+    .field-error {
+      border-color: #ff6b6b !important;
+    }
     @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
@@ -74,8 +87,11 @@
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" loading="lazy" />
       </div>
 
+      <!-- MESAJ DE ERORI -->
+      <div id="errorMsg" class="error-message" style="display:none"></div>
+
       <!-- FORMULARUL CORECTAT: netlify în loc de data-netlify="true" -->
-      <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field">
+      <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field" id="mainForm">
         <p style="display:none">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
@@ -85,22 +101,22 @@
 
         <fieldset>
           <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
-          <label><input type="radio" name="choice" value="Timora PRO" required>
-            <span id="lbl-choice-timora">⏰ Timora PRO</span>
+          <label><input type="radio" name="choice" value="Timora PRO">
+            <span id="lbl-choice-timora">Timora PRO</span>
           </label>
           <label><input type="radio" name="choice" value="Flowin">
-            <span id="lbl-choice-flowin">🌊 Flowin</span>
+            <span id="lbl-choice-flowin">Flowin</span>
           </label>
         </fieldset>
 
         <fieldset>
           <legend id="q2-legend">De ce ai ales acest logo?</legend>
-          <textarea id="reason" name="reason" rows="3" placeholder="Răspuns scurt" required minlength="10"></textarea>
+          <textarea id="reason" name="reason" rows="3" placeholder="Răspuns scurt"></textarea>
         </fieldset>
 
         <fieldset>
           <legend id="q3-legend">Care pare mai modern și profesionist?</legend>
-          <label><input type="radio" name="modern" value="Timora PRO" required>
+          <label><input type="radio" name="modern" value="Timora PRO">
             <span id="lbl-modern-timora">Timora PRO</span>
           </label>
           <label><input type="radio" name="modern" value="Flowin">
@@ -117,20 +133,20 @@
         <fieldset>
           <legend id="q4-legend">Ce impresie îți transmite logo-ul preferat?</legend>
           <div class="row">
-            <label><input type="radio" name="feel" value="Modern" required>
-              <span id="lbl-feel-modern">✨ Modern</span>
+            <label><input type="radio" name="feel" value="Modern">
+              <span id="lbl-feel-modern">Modern</span>
             </label>
             <label><input type="radio" name="feel" value="Calm">
-              <span id="lbl-feel-calm">🧘 Calm</span>
+              <span id="lbl-feel-calm">Calm</span>
             </label>
             <label><input type="radio" name="feel" value="Elegant">
-              <span id="lbl-feel-elegant">💎 Elegant</span>
+              <span id="lbl-feel-elegant">Elegant</span>
             </label>
             <label><input type="radio" name="feel" value="Dinamic">
-              <span id="lbl-feel-dynamic">⚡ Dinamic</span>
+              <span id="lbl-feel-dynamic">Dinamic</span>
             </label>
             <label><input type="radio" name="feel" value="Tehnologic">
-              <span id="lbl-feel-tech">🔧 Tehnologic</span>
+              <span id="lbl-feel-tech">Tehnologic</span>
             </label>
           </div>
         </fieldset>
@@ -163,11 +179,12 @@
     const introRo = document.getElementById('intro-ro');
     const introDe = document.getElementById('intro-de');
     const langField = document.getElementById('langField');
-    const form = document.querySelector('form');
+    const form = document.getElementById('mainForm');
     const submitBtn = document.getElementById('submitBtn');
     const submitLabel = document.getElementById('submitLabel');
     const reasonTextarea = document.getElementById('reason');
     const suggestionsTextarea = document.getElementById('suggestions');
+    const errorMsg = document.getElementById('errorMsg');
 
     const translations = {
       ro: {
@@ -177,22 +194,29 @@
         q4: 'Ce impresie îți transmite logo-ul preferat?',
         q5: 'Sugestii de îmbunătățire (opțional)',
         submit: 'Trimite',
-        submitting: '⏳ Se trimite...',
+        submitting: 'Se trimite...',
         reset: 'Resetează',
         gdpr: 'Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.',
         success: '✓ Mulțumim! Răspunsul a fost înregistrat cu succes! 🎉',
         error: '⚠ Eroare la trimitere. Te rugăm să încerci din nou.',
         reasonPlaceholder: 'Răspuns scurt',
         suggestionsPlaceholder: 'Opțional',
-        timora: '⏰ Timora PRO',
-        flowin: '🌊 Flowin',
+        timora: ' Timora PRO',
+        flowin: ' Flowin',
         both: 'Ambele',
         none: 'Niciunul',
-        modern: '✨ Modern',
-        calm: '🧘 Calm',
-        elegant: '💎 Elegant',
-        dynamic: '⚡ Dinamic',
-        tech: '🔧 Tehnologic'
+        modern: ' Modern',
+        calm: ' Calm',
+        elegant: ' Elegant',
+        dynamic: ' Dinamic',
+        tech: ' Tehnologic',
+        // MESAJE DE VALIDARE ÎN ROMÂNĂ
+        validation: {
+          choice: '⚠ Te rugăm să alegi un logo',
+          reason: '⚠ Te rugăm să scrii de ce ai ales acest logo (minim 10 caractere)',
+          modern: '⚠ Te rugăm să alegi care logo pare mai modern',
+          feel: '⚠ Te rugăm să alegi ce impresie îți transmite logo-ul'
+        }
       },
       de: {
         q1: 'Welches Logo passt besser?',
@@ -201,22 +225,29 @@
         q4: 'Welchen Eindruck vermittelt dir dein bevorzugtes Logo?',
         q5: 'Verbesserungsvorschläge (freiwillig)',
         submit: 'Senden',
-        submitting: '⏳ Wird gesendet...',
+        submitting: ' Wird gesendet...',
         reset: 'Zurücksetzen',
         gdpr: 'Mit dem Absenden stimmst du zu, dass deine Antworten zur Auswertung der Markenpräferenzen verarbeitet werden.',
         success: '✓ Danke! Deine Antwort wurde erfolgreich gespeichert! 🎉',
         error: '⚠ Fehler beim Senden. Bitte versuche es erneut.',
         reasonPlaceholder: 'Kurze Antwort',
         suggestionsPlaceholder: 'Freiwillig',
-        timora: '⏰ Timora PRO',
-        flowin: '🌊 Flowin',
+        timora: ' Timora PRO',
+        flowin: ' Flowin',
         both: 'Beide',
         none: 'Keines',
-        modern: '✨ Modern',
-        calm: '🧘 Ruhig',
-        elegant: '💎 Elegant',
-        dynamic: '⚡ Dynamisch',
-        tech: '🔧 Technisch'
+        modern: ' Modern',
+        calm: ' Ruhig',
+        elegant: ' Elegant',
+        dynamic: ' Dynamisch',
+        tech: ' Technisch',
+        // MESAJE DE VALIDARE ÎN GERMANĂ
+        validation: {
+          choice: '⚠ Bitte wähle ein Logo aus',
+          reason: '⚠ Bitte schreibe warum du dieses Logo gewählt hast (mindestens 10 Zeichen)',
+          modern: '⚠ Bitte wähle welches Logo moderner wirkt',
+          feel: '⚠ Bitte wähle welchen Eindruck dir das Logo vermittelt'
+        }
       }
     };
 
@@ -262,9 +293,67 @@
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
     setLang('ro');
 
-    // AJAX SUBMIT
+    // FUNCȚIE DE VALIDARE CUSTOM
+    function validateForm() {
+      const t = translations[currentLang].validation;
+      let isValid = true;
+      let errorMessage = '';
+      
+      // Resetează erorile
+      errorMsg.style.display = 'none';
+      document.querySelectorAll('.field-error').forEach(el => {
+        el.classList.remove('field-error');
+      });
+      
+      // Verifică Q1 - Alegerea logo-ului
+      const choiceSelected = document.querySelector('input[name="choice"]:checked');
+      if (!choiceSelected) {
+        isValid = false;
+        errorMessage += t.choice + '<br>';
+        document.querySelector('input[name="choice"]').closest('fieldset').classList.add('field-error');
+      }
+      
+      // Verifică Q2 - Motivul
+      const reasonValue = reasonTextarea.value.trim();
+      if (!reasonValue || reasonValue.length < 10) {
+        isValid = false;
+        errorMessage += t.reason + '<br>';
+        reasonTextarea.classList.add('field-error');
+      }
+      
+      // Verifică Q3 - Modern și profesionist
+      const modernSelected = document.querySelector('input[name="modern"]:checked');
+      if (!modernSelected) {
+        isValid = false;
+        errorMessage += t.modern + '<br>';
+        document.querySelector('input[name="modern"]').closest('fieldset').classList.add('field-error');
+      }
+      
+      // Verifică Q4 - Impresia
+      const feelSelected = document.querySelector('input[name="feel"]:checked');
+      if (!feelSelected) {
+        isValid = false;
+        errorMessage += t.feel + '<br>';
+        document.querySelector('input[name="feel"]').closest('fieldset').classList.add('field-error');
+      }
+      
+      if (!isValid) {
+        errorMsg.innerHTML = errorMessage;
+        errorMsg.style.display = 'block';
+        errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      
+      return isValid;
+    }
+
+    // ASCULTĂTOR PENTRU SUBMIT
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      // Validează formularul
+      if (!validateForm()) {
+        return;
+      }
       
       const t = translations[currentLang];
       submitBtn.disabled = true;
@@ -294,6 +383,7 @@
           successMsg.style.color = '#9ff3c6';
           successMsg.style.border = '1px solid #1d6b49';
           form.reset();
+          errorMsg.style.display = 'none';
           successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
           setTimeout(() => successMsg.style.display = 'none', 10000);
         } else {
@@ -310,6 +400,14 @@
         submitBtn.disabled = false;
         submitLabel.textContent = t.submit;
       }
+    });
+
+    // ASCULTĂTOR PENTRU RESETARE FORMULAR
+    document.getElementById('resetLabel').addEventListener('click', function() {
+      errorMsg.style.display = 'none';
+      document.querySelectorAll('.field-error').forEach(el => {
+        el.classList.remove('field-error');
+      });
     });
   </script>
 </body>
