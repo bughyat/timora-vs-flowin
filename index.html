@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alegerea logo-ului / Logo-Auswahl</title>
+  <meta name="description" content="Sondaj vizual pentru alegerea logo-ului final (Flowin vs Timora PRO)." />
+  <style>
+    :root{
+      --bg:#0b1324; --card:#111a2e; --text:#ffffff; --muted:#c9d1e0;
+      --accent:#19b6ff; --accent-2:#2a70ff; --border:#23314f;
+    }
+    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    .wrap{max-width:1000px;margin:40px auto;padding:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+    h1{margin:0 0 8px;font-size:28px}
+    .muted{color:var(--muted)}
+    .lang-switch{display:flex;gap:8px;margin:12px 0 20px}
+    .lang-switch button{
+      background:#0f1a30;border:1px solid var(--border);color:var(--muted);
+      padding:8px 12px;border-radius:999px;cursor:pointer
+    }
+    .lang-switch button.active{color:#fff;border-color:var(--accent);box-shadow:0 0 0 2px #0a2030}
+    .hero{margin:8px 0 16px}
+    .hero img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);display:block}
+    fieldset{border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
+    legend{padding:0 6px;color:var(--muted)}
+    label{display:block;margin:6px 0}
+    textarea, input[type="text"]{
+      width:100%;background:#0f1a30;color:#fff;border:1px solid var(--border);
+      border-radius:10px;padding:10px
+    }
+    .row{display:grid;gap:12px}
+    .actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+    .btn{
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#00101a;border:none;padding:12px 18px;border-radius:10px;cursor:pointer;font-weight:600
+    }
+    .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
+    .note{font-size:13px;color:var(--muted)}
+    .success,.error{margin-top:14px;padding:10px;border-radius:8px}
+    .success{background:#0e2a19;color:#9ff3c6;border:1px solid #1d6b49}
+    .error{background:#2a1212;color:#ffc7c7;border:1px solid #6b1d1d}
+    .footer{margin-top:16px;text-align:center;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Alegerea logo-ului / Logo-Auswahl</h1>
+      <p class="muted" id="intro-ro">
+        Test de feedback vizual pentru alegerea logo-ului final al aplicației de organizare a timpului.
+        Alege logo-ul care ți se pare mai potrivit și răspunde la câteva întrebări scurte.
+      </p>
+      <p class="muted" id="intro-de" style="display:none">
+        Visuelles Feedback für die Auswahl des endgültigen Logos der Zeitmanagement-App.
+        Wähle das Logo, das dir besser gefällt, und beantworte ein paar kurze Fragen.
+      </p>
+
+      <div class="lang-switch">
+        <button type="button" data-lang="ro" class="active">Ro</button>
+        <button type="button" data-lang="de">De</button>
+      </div>
+
+      <div class="hero">
+        <img src="assets/compare.png" alt="Timora PRO vs Flowin" />
+      </div>
+
+      <form id="voteForm" action="https://formspree.io/f/XXXXXXXX" method="POST">
+        <!-- Honeypot anti-spam -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <!-- Limbă curentă -->
+        <input type="hidden" name="lang" id="langField" value="ro" />
+
+        <fieldset>
+          <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
+          <label><input type="radio" name="choice" value="Timora PRO" required> Timora PRO</label>
+          <label><input type="radio" name="choice" value="Flowin"> Flowin</label>
+        </fieldset>
+
+        <fieldset>
+          <legend id="q2-legend">De ce ai ales acest logo?</legend>
+          <textarea name="reason" rows="3" placeholder="Răspuns scurt" required></textarea>
+        </fieldset>
+
+        <fieldset>
+          <legend id="q3-legend">Care pare mai modern și profesionist?</legend>
+          <label><input type="radio" name="modern" value="Timora PRO" required> Timora PRO</label>
+          <label><input type="radio" name="modern" value="Flowin"> Flowin</label>
+          <label><input type="radio" name="modern" value="Ambele"> Ambele</label>
+          <label><input type="radio" name="modern" value="Niciunul"> Niciunul</label>
+        </fieldset>
+
+        <fieldset>
+          <legend id="q4-legend">Ce impresie îți transmite logo-ul preferat?</legend>
+          <div class="row">
+            <label><input type="radio" name="feel" value="Modern" required> Modern</label>
+            <label><input type="radio" name="feel" value="Calm"> Calm</label>
+            <label><input type="radio" name="feel" value="Elegant"> Elegant</label>
+            <label><input type="radio" name="feel" value="Dinamic"> Dinamic</label>
+            <label><input type="radio" name="feel" value="Tehnologic"> Tehnologic</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend id="q5-legend">Sugestii de îmbunătățire (opțional)</legend>
+          <textarea name="suggestions" rows="2" placeholder="Optional"></textarea>
+        </fieldset>
+
+        <div class="actions">
+          <button class="btn" type="submit" id="submitLabel">Trimite</button>
+          <button class="btn secondary" type="reset" id="resetLabel">Resetează</button>
+        </div>
+
+        <p class="note" id="gdpr">
+          Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.
+        </p>
+
+        <div id="msg" class="success" style="display:none">Mulțumim! / Danke! Răspunsul a fost înregistrat.</div>
+        <div id="err" class="error" style="display:none">Eroare la trimitere. Încearcă din nou.</div>
+      </form>
+
+      <div class="footer">© 2025 Bughy Tech</div>
+    </div>
+  </div>
+
+  <script>
+    // comutare limbă
+    const langBtns=document.querySelectorAll('.lang-switch button');
+    const introRo=document.getElementById('intro-ro');
+    const introDe=document.getElementById('intro-de');
+    const langField=document.getElementById('langField');
+
+    const t = {
+      ro:{
+        q1:'Care logo ți se pare mai potrivit?',
+        q2:'De ce ai ales acest logo?',
+        q3:'Care pare mai modern și profesionist?',
+        q4:'Ce impresie îți transmite logo-ul preferat?',
+        q5:'Sugestii de îmbunătățire (opțional)',
+        submit:'Trimite', reset:'Resetează',
+        gdpr:'Trimiterea acestui formular înseamnă că ești de acord ca răspunsurile tale să fie prelucrate pentru analiza preferințelor de brand.'
+      },
+      de:{
+        q1:'Welches Logo passt besser?',
+        q2:'Warum hast du dieses Logo gewählt?',
+        q3:'Welches wirkt moderner und professioneller?',
+        q4:'Welchen Eindruck vermittelt dir dein bevorzugtes Logo?',
+        q5:'Verbesserungsvorschläge (optional)',
+        submit:'Senden', reset:'Zurücksetzen',
+        gdpr:'Mit dem Absenden stimmst du zu, dass deine Antworten zur Auswertung der Markenpräferenzen verarbeitet werden.'
+      }
+    };
+
+    function setLang(code){
+      langBtns.forEach(b=>b.classList.toggle('active', b.dataset.lang===code));
+      introRo.style.display = (code==='ro') ? '' : 'none';
+      introDe.style.display = (code==='de') ? '' : 'none';
+      langField.value = code;
+
+      const dict=t[code];
+      document.getElementById('q1-legend').textContent=dict.q1;
+      document.getElementById('q2-legend').textContent=dict.q2;
+      document.getElementById('q3-legend').textContent=dict.q3;
+      document.getElementById('q4-legend').textContent=dict.q4;
+      document.getElementById('q5-legend').textContent=dict.q5;
+      document.getElementById('submitLabel').textContent=dict.submit;
+      document.getElementById('resetLabel').textContent=dict.reset;
+      document.getElementById('gdpr').textContent=dict.gdpr;
+    }
+
+    langBtns.forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+    setLang('ro');
+
+    // AJAX trimitere (Formspree)
+    const form=document.getElementById('voteForm');
+    const msg=document.getElementById('msg');
+    const err=document.getElementById('err');
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      msg.style.display='none'; err.style.display='none';
+      try{
+        const resp = await fetch(form.action, {
+          method:'POST',
+          headers:{ 'Accept':'application/json' },
+          body:new FormData(form)
+        });
+        if(resp.ok){ form.reset(); msg.style.display='block'; }
+        else{ err.style.display='block'; }
+      }catch(_){ err.style.display='block'; }
+    });
+  </script>
+</body>
+</html>
