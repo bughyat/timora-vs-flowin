@@ -202,13 +202,14 @@
 
       <div id="errorMsg" class="error-message" style="display:none"></div>
 
-      <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field" id="mainForm">
+      <!-- FORMULAR NETLIFY CORECT -->
+      <form name="logo-vote" method="POST" netlify data-netlify="true" data-netlify-honeypot="bot-field" id="mainForm">
+        <input type="hidden" name="form-name" value="logo-vote" />
+        <input type="hidden" name="lang" id="langField" value="ro" />
+        
         <p style="display:none">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
-        
-        <input type="hidden" name="form-name" value="logo-vote" />
-        <input type="hidden" name="lang" id="langField" value="ro" />
 
         <fieldset>
           <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
@@ -461,58 +462,18 @@
       return isValid;
     }
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
+    // FUNCȚIE SUBMIT PENTRU NETLIFY
+    form.addEventListener('submit', function(e) {
       if (!validateForm()) {
+        e.preventDefault();
         return;
       }
       
+      // Doar afișează mesajul de încărcare
+      // Netlify se ocupă de restul automat
       const t = translations[currentLang];
       submitBtn.disabled = true;
       submitLabel.textContent = t.submitting;
-      
-      let successMsg = document.getElementById('successMsg');
-      if (!successMsg) {
-        successMsg = document.createElement('div');
-        successMsg.id = 'successMsg';
-        successMsg.className = 'success';
-        form.appendChild(successMsg);
-      }
-      
-      try {
-        const formData = new FormData(form);
-        
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
-        });
-        
-        if (response.ok) {
-          successMsg.textContent = t.success;
-          successMsg.style.display = 'block';
-          successMsg.style.background = '#0e2a19';
-          successMsg.style.color = '#9ff3c6';
-          successMsg.style.border = '1px solid #1d6b49';
-          form.reset();
-          errorMsg.style.display = 'none';
-          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          setTimeout(() => successMsg.style.display = 'none', 10000);
-        } else {
-          throw new Error('Network error');
-        }
-      } catch (error) {
-        successMsg.textContent = t.error;
-        successMsg.style.display = 'block';
-        successMsg.style.background = '#2a1212';
-        successMsg.style.color = '#ffc7c7';
-        successMsg.style.border = '1px solid #6b1d1d';
-        setTimeout(() => successMsg.style.display = 'none', 5000);
-      } finally {
-        submitBtn.disabled = false;
-        submitLabel.textContent = t.submit;
-      }
     });
 
     document.getElementById('resetLabel').addEventListener('click', function() {
