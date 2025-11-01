@@ -12,9 +12,8 @@
     }
     html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial}
     
-    /* OPTIMIZĂRI PENTRU IOS ȘI MOBILE */
     body {
-      -webkit-text-size-adjust: 100%; /* Previne zoom pe iOS */
+      -webkit-text-size-adjust: 100%;
     }
     
     .wrap{max-width:1000px;margin:40px auto;padding:24px}
@@ -34,26 +33,44 @@
       }
     }
     
-    h1{margin:0 0 8px;font-size:28px}
+    .header-section {text-align:center; margin-bottom:28px;}
+    .header-section h1{
+      margin:0 0 10px;font-size:30px;font-weight:700;color:var(--accent);
+      letter-spacing:.5px;
+    }
+    .header-divider {
+      width:80px; height:3px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border-radius:4px; margin:0 auto 20px;
+    }
+    .header-description {
+      margin:0 auto; max-width:600px; color:var(--muted);
+      line-height:1.5; font-size:17px; text-align:center;
+    }
+    .header-subtitle {
+      margin:12px auto 0; max-width:500px; color:#9da7c2;
+      line-height:1.4; font-size:15px; text-align:center;
+      font-style:italic;
+    }
     
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 24px;
-      }
+    @media (max-width: 768px){
+      .header-section h1{font-size:26px}
+      .header-description{font-size:16px; line-height:1.4;}
+      .header-subtitle{font-size:14px;}
     }
     
     .muted{color:var(--muted)}
-    .lang-switch{display:flex;gap:8px;margin:12px 0 20px}
+    .lang-switch{display:flex;gap:8px;margin:20px 0 25px;justify-content:center;}
     .lang-switch button{
       background:#0f1a30;border:1px solid var(--border);color:var(--muted);
-      padding:8px 12px;border-radius:999px;cursor:pointer;transition:all 0.2s
+      padding:10px 16px;border-radius:999px;cursor:pointer;transition:all 0.2s;
+      font-size:15px;
     }
     
-    /* BUTOANE MAI MARI PE MOBILE */
     @media (max-width: 768px) {
       .lang-switch button {
-        padding: 12px 16px;
-        min-height: 44px; /* Touch target standard iOS */
+        padding: 12px 18px;
+        min-height: 44px;
       }
     }
     
@@ -73,11 +90,10 @@
     legend{padding:0 6px;color:var(--muted);font-weight:600}
     label{display:block;margin:8px 0;cursor:pointer;padding:6px;border-radius:6px;transition:background 0.2s}
     
-    /* LABEL-URI MAI MARI PE MOBILE */
     @media (max-width: 768px) {
       label {
         padding: 10px;
-        min-height: 44px; /* Touch target mare */
+        min-height: 44px;
         margin: 10px 0;
       }
     }
@@ -88,9 +104,8 @@
       border-radius:10px;padding:10px;font-family:inherit;transition:border 0.2s
     }
     
-    /* FIX PENTRU ZOOM PE IOS */
     textarea, input[type="text"] {
-      font-size: 16px; /* Previne zoom automat pe iOS */
+      font-size: 16px;
     }
     
     @media (max-width: 768px) {
@@ -104,7 +119,6 @@
     .row{display:grid;gap:8px}
     .actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
     
-    /* BUTOANE FULL WIDTH PE MOBILE */
     @media (max-width: 768px) {
       .actions {
         flex-direction: column;
@@ -117,7 +131,6 @@
       font-weight:600;transition:transform 0.2s;min-width:120px
     }
     
-    /* BUTOANE MAI MARI PE MOBILE */
     @media (max-width: 768px) {
       .btn {
         padding: 16px 20px;
@@ -158,7 +171,6 @@
     }
     @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
     
-    /* ELIMINĂ HIGHLIGHT ALBASTRU PE IOS */
     button, label, input, textarea {
       -webkit-tap-highlight-color: transparent;
     }
@@ -167,27 +179,27 @@
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>Alegerea logo-ului / Logo-Auswahl</h1>
-
-      <p class="muted" id="intro-ro">
-        Ajută-ne să alegem logo-ul final pentru sistemul nostru online de rezervări.
-        Alege designul care îți place cel mai mult și răspunde la câteva întrebări scurte.
-      </p>
-      <p class="muted" id="intro-de" style="display:none">
-        Hilf uns, das finale Logo für unser Online-Buchungssystem zu wählen.
-        Wähle das Design, das dir am besten gefällt, und beantworte ein paar kurze Fragen.
-      </p>
+      <!-- HEADER SECTION ÎMBUNĂTĂȚIT -->
+      <div class="header-section">
+        <h1 id="main-title">Alegerea logo-ului</h1>
+        <div class="header-divider"></div>
+        <p class="header-description" id="main-description">
+          Alege logo-ul preferat pentru sistemul nostru de rezervări
+        </p>
+        <p class="header-subtitle" id="main-subtitle">
+          Votează designul care îți place cel mai mult
+        </p>
+      </div>
 
       <div class="lang-switch">
-        <button type="button" data-lang="ro" class="active">Ro</button>
-        <button type="button" data-lang="de">De</button>
+        <button type="button" data-lang="ro" class="active">Română</button>
+        <button type="button" data-lang="de">Deutsch</button>
       </div>
 
       <div class="hero">
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" loading="lazy" />
       </div>
 
-      <!-- MESAJ DE ERORI -->
       <div id="errorMsg" class="error-message" style="display:none"></div>
 
       <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field" id="mainForm">
@@ -275,8 +287,6 @@
 
   <script>
     const langBtns = document.querySelectorAll('.lang-switch button');
-    const introRo = document.getElementById('intro-ro');
-    const introDe = document.getElementById('intro-de');
     const langField = document.getElementById('langField');
     const form = document.getElementById('mainForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -285,20 +295,19 @@
     const suggestionsTextarea = document.getElementById('suggestions');
     const errorMsg = document.getElementById('errorMsg');
 
-    // FUNCȚIE PENTRU DETECTAREA AUTOMATĂ A LIMBII
     function detectBrowserLanguage() {
       const browserLang = navigator.language || navigator.userLanguage;
-      
-      // Verifică dacă browser-ul are limba germană
       if (browserLang.startsWith('de')) {
         return 'de';
       }
-      // Implicit română
       return 'ro';
     }
 
     const translations = {
       ro: {
+        title: 'Alegerea logo-ului',
+        description: 'Alege logo-ul preferat pentru sistemul nostru de rezervări',
+        subtitle: 'Votează designul care îți place cel mai mult',
         q1: 'Care logo ți se pare mai potrivit?',
         q2: 'De ce ai ales acest logo?',
         q3: 'Care pare mai modern și profesionist?',
@@ -329,6 +338,9 @@
         }
       },
       de: {
+        title: 'Logo-Auswahl',
+        description: 'Wähle dein bevorzugtes Logo für unser Buchungssystem',
+        subtitle: 'Stimme für das Design, das dir am besten gefällt',
         q1: 'Welches Logo passt besser?',
         q2: 'Warum hast du dieses Logo gewählt?',
         q3: 'Welches wirkt moderner und professioneller?',
@@ -360,14 +372,16 @@
       }
     };
 
-    // SETEAZĂ LIMBA ÎN FUNCȚIE DE BROWSER
     let currentLang = detectBrowserLanguage();
 
     function setLang(code) {
       currentLang = code;
       langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === code));
-      introRo.style.display = (code === 'ro') ? '' : 'none';
-      introDe.style.display = (code === 'de') ? '' : 'none';
+      
+      document.getElementById('main-title').textContent = translations[code].title;
+      document.getElementById('main-description').textContent = translations[code].description;
+      document.getElementById('main-subtitle').textContent = translations[code].subtitle;
+      
       langField.value = code;
 
       const t = translations[code];
@@ -398,8 +412,6 @@
     }
 
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
-    
-    // INITIALIZEAZĂ CU LIMBA DETECTATĂ
     setLang(currentLang);
 
     function validateForm() {
