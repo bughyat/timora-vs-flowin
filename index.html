@@ -11,35 +11,122 @@
       --accent:#19b6ff; --accent-2:#2a70ff; --border:#23314f;
     }
     html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    
+    /* OPTIMIZĂRI PENTRU IOS ȘI MOBILE */
+    body {
+      -webkit-text-size-adjust: 100%; /* Previne zoom pe iOS */
+    }
+    
     .wrap{max-width:1000px;margin:40px auto;padding:24px}
+    
+    @media (max-width: 768px) {
+      .wrap {
+        padding: 16px;
+        margin: 20px auto;
+      }
+    }
+    
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
+    
+    @media (max-width: 768px) {
+      .card {
+        padding: 20px;
+      }
+    }
+    
     h1{margin:0 0 8px;font-size:28px}
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+    }
+    
     .muted{color:var(--muted)}
     .lang-switch{display:flex;gap:8px;margin:12px 0 20px}
     .lang-switch button{
       background:#0f1a30;border:1px solid var(--border);color:var(--muted);
       padding:8px 12px;border-radius:999px;cursor:pointer;transition:all 0.2s
     }
+    
+    /* BUTOANE MAI MARI PE MOBILE */
+    @media (max-width: 768px) {
+      .lang-switch button {
+        padding: 12px 16px;
+        min-height: 44px; /* Touch target standard iOS */
+      }
+    }
+    
     .lang-switch button:hover{background:#1a2740}
     .lang-switch button.active{color:#fff;border-color:var(--accent);box-shadow:0 0 0 2px #0a2030}
     .hero{margin:8px 0 16px}
     .hero img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);display:block}
     fieldset{border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
+    
+    @media (max-width: 768px) {
+      fieldset {
+        padding: 14px;
+        margin: 14px 0;
+      }
+    }
+    
     legend{padding:0 6px;color:var(--muted);font-weight:600}
     label{display:block;margin:8px 0;cursor:pointer;padding:6px;border-radius:6px;transition:background 0.2s}
+    
+    /* LABEL-URI MAI MARI PE MOBILE */
+    @media (max-width: 768px) {
+      label {
+        padding: 10px;
+        min-height: 44px; /* Touch target mare */
+        margin: 10px 0;
+      }
+    }
+    
     label:hover{background:rgba(25,182,255,0.05)}
     textarea, input[type="text"]{
       width:100%;background:#0f1a30;color:#fff;border:1px solid var(--border);
       border-radius:10px;padding:10px;font-family:inherit;transition:border 0.2s
     }
+    
+    /* FIX PENTRU ZOOM PE IOS */
+    textarea, input[type="text"] {
+      font-size: 16px; /* Previne zoom automat pe iOS */
+    }
+    
+    @media (max-width: 768px) {
+      textarea, input[type="text"] {
+        padding: 12px;
+        min-height: 44px;
+      }
+    }
+    
     textarea:focus, input[type="text"]:focus{outline:none;border-color:var(--accent)}
     .row{display:grid;gap:8px}
     .actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+    
+    /* BUTOANE FULL WIDTH PE MOBILE */
+    @media (max-width: 768px) {
+      .actions {
+        flex-direction: column;
+      }
+    }
+    
     .btn{
       background:linear-gradient(90deg,var(--accent),var(--accent-2));
       color:#00101a;border:none;padding:12px 18px;border-radius:10px;cursor:pointer;
       font-weight:600;transition:transform 0.2s;min-width:120px
     }
+    
+    /* BUTOANE MAI MARI PE MOBILE */
+    @media (max-width: 768px) {
+      .btn {
+        padding: 16px 20px;
+        min-height: 50px;
+        width: 100%;
+        font-size: 17px;
+      }
+    }
+    
     .btn:hover{transform:translateY(-2px)}
     .btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
     .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
@@ -58,10 +145,23 @@
       border-radius: 6px;
       display: none;
     }
+    
+    @media (max-width: 768px) {
+      .error-message {
+        padding: 12px;
+        margin-top: 12px;
+      }
+    }
+    
     .field-error {
       border-color: #ff6b6b !important;
     }
     @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+    
+    /* ELIMINĂ HIGHLIGHT ALBASTRU PE IOS */
+    button, label, input, textarea {
+      -webkit-tap-highlight-color: transparent;
+    }
   </style>
 </head>
 <body>
@@ -70,12 +170,12 @@
       <h1>Alegerea logo-ului / Logo-Auswahl</h1>
 
       <p class="muted" id="intro-ro">
-        Test de feedback vizual pentru alegerea logo-ului final al aplicației de organizare a timpului.
+        Test de feedback vizual pentru alegerea logo-ului final al aplicației de rezervări.
         Alege logo-ul care ți se pare mai potrivit și răspunde la câteva întrebări scurte.
       </p>
       <p class="muted" id="intro-de" style="display:none">
-        Visuelles Feedback für die Auswahl des endgültigen Logos der Zeitmanagement-App.
-        Wähle das Logo, das dir besser gefällt, und beantworte ein paar kurze Fragen.
+        Visuelles Feedback zur Auswahl des finalen Logos für unsere Buchungs-App.
+        Wählen Sie das Logo aus, das Ihnen besser gefällt, und beantworten Sie einige kurze Fragen.
       </p>
 
       <div class="lang-switch">
@@ -90,7 +190,6 @@
       <!-- MESAJ DE ERORI -->
       <div id="errorMsg" class="error-message" style="display:none"></div>
 
-      <!-- FORMULARUL CORECTAT: netlify în loc de data-netlify="true" -->
       <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field" id="mainForm">
         <p style="display:none">
           <label>Don't fill this out: <input name="bot-field" /></label>
@@ -175,6 +274,7 @@
   </div>
 
   <script>
+    // JavaScript-ul tău rămâne EXACT la fel
     const langBtns = document.querySelectorAll('.lang-switch button');
     const introRo = document.getElementById('intro-ro');
     const introDe = document.getElementById('intro-de');
@@ -210,7 +310,6 @@
         elegant: 'Elegant',
         dynamic: 'Dinamic',
         tech: 'Tehnologic',
-        // MESAJE DE VALIDARE ÎN ROMÂNĂ
         validation: {
           choice: '⚠ Te rugăm să alegi un logo',
           reason: '⚠ Te rugăm să scrii de ce ai ales acest logo (minim 10 caractere)',
@@ -225,7 +324,7 @@
         q4: 'Welchen Eindruck vermittelt dir dein bevorzugtes Logo?',
         q5: 'Verbesserungsvorschläge (freiwillig)',
         submit: 'Senden',
-        submitting: ' Wird gesendet...',
+        submitting: 'Wird gesendet...',
         reset: 'Zurücksetzen',
         gdpr: 'Mit dem Absenden stimmst du zu, dass deine Antworten zur Auswertung der Markenpräferenzen verarbeitet werden.',
         success: '✓ Danke! Deine Antwort wurde erfolgreich gespeichert!',
@@ -241,7 +340,6 @@
         elegant: 'Elegant',
         dynamic: 'Dynamisch',
         tech: 'Technisch',
-        // MESAJE DE VALIDARE ÎN GERMANĂ
         validation: {
           choice: '⚠ Bitte wähle ein Logo aus',
           reason: '⚠ Bitte schreibe warum du dieses Logo gewählt hast (mindestens 10 Zeichen)',
@@ -262,7 +360,6 @@
 
       const t = translations[code];
       
-      // Actualizează toate textele
       document.getElementById('q1-legend').textContent = t.q1;
       document.getElementById('q2-legend').textContent = t.q2;
       document.getElementById('q3-legend').textContent = t.q3;
@@ -272,11 +369,9 @@
       document.getElementById('resetLabel').textContent = t.reset;
       document.getElementById('gdpr').textContent = t.gdpr;
       
-      // Actualizează placeholder-ele
       reasonTextarea.placeholder = t.reasonPlaceholder;
       suggestionsTextarea.placeholder = t.suggestionsPlaceholder;
       
-      // Actualizează opțiunile cu emoji-uri corecte
       document.getElementById('lbl-choice-timora').textContent = t.timora;
       document.getElementById('lbl-choice-flowin').textContent = t.flowin;
       document.getElementById('lbl-modern-timora').textContent = t.timora;
@@ -293,19 +388,16 @@
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
     setLang('ro');
 
-    // FUNCȚIE DE VALIDARE CUSTOM
     function validateForm() {
       const t = translations[currentLang].validation;
       let isValid = true;
       let errorMessage = '';
       
-      // Resetează erorile
       errorMsg.style.display = 'none';
       document.querySelectorAll('.field-error').forEach(el => {
         el.classList.remove('field-error');
       });
       
-      // Verifică Q1 - Alegerea logo-ului
       const choiceSelected = document.querySelector('input[name="choice"]:checked');
       if (!choiceSelected) {
         isValid = false;
@@ -313,7 +405,6 @@
         document.querySelector('input[name="choice"]').closest('fieldset').classList.add('field-error');
       }
       
-      // Verifică Q2 - Motivul
       const reasonValue = reasonTextarea.value.trim();
       if (!reasonValue || reasonValue.length < 10) {
         isValid = false;
@@ -321,7 +412,6 @@
         reasonTextarea.classList.add('field-error');
       }
       
-      // Verifică Q3 - Modern și profesionist
       const modernSelected = document.querySelector('input[name="modern"]:checked');
       if (!modernSelected) {
         isValid = false;
@@ -329,7 +419,6 @@
         document.querySelector('input[name="modern"]').closest('fieldset').classList.add('field-error');
       }
       
-      // Verifică Q4 - Impresia
       const feelSelected = document.querySelector('input[name="feel"]:checked');
       if (!feelSelected) {
         isValid = false;
@@ -346,11 +435,9 @@
       return isValid;
     }
 
-    // ASCULTĂTOR PENTRU SUBMIT
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // Validează formularul
       if (!validateForm()) {
         return;
       }
@@ -402,7 +489,6 @@
       }
     });
 
-    // ASCULTĂTOR PENTRU RESETARE FORMULAR
     document.getElementById('resetLabel').addEventListener('click', function() {
       errorMsg.style.display = 'none';
       document.querySelectorAll('.field-error').forEach(el => {
