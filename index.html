@@ -274,7 +274,6 @@
   </div>
 
   <script>
-    // JavaScript-ul tău rămâne EXACT la fel
     const langBtns = document.querySelectorAll('.lang-switch button');
     const introRo = document.getElementById('intro-ro');
     const introDe = document.getElementById('intro-de');
@@ -285,6 +284,18 @@
     const reasonTextarea = document.getElementById('reason');
     const suggestionsTextarea = document.getElementById('suggestions');
     const errorMsg = document.getElementById('errorMsg');
+
+    // FUNCȚIE PENTRU DETECTAREA AUTOMATĂ A LIMBII
+    function detectBrowserLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      
+      // Verifică dacă browser-ul are limba germană
+      if (browserLang.startsWith('de')) {
+        return 'de';
+      }
+      // Implicit română
+      return 'ro';
+    }
 
     const translations = {
       ro: {
@@ -349,7 +360,8 @@
       }
     };
 
-    let currentLang = 'ro';
+    // SETEAZĂ LIMBA ÎN FUNCȚIE DE BROWSER
+    let currentLang = detectBrowserLanguage();
 
     function setLang(code) {
       currentLang = code;
@@ -386,7 +398,9 @@
     }
 
     langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
-    setLang('ro');
+    
+    // INITIALIZEAZĂ CU LIMBA DETECTATĂ
+    setLang(currentLang);
 
     function validateForm() {
       const t = translations[currentLang].validation;
