@@ -10,110 +10,114 @@
       --bg:#0b1324; --card:#111a2e; --text:#ffffff; --muted:#c9d1e0;
       --accent:#19b6ff; --accent-2:#2a70ff; --border:#23314f;
     }
-    html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,Segoe UI,Roboto,Helvetica,Arial}
     
     body {
       -webkit-text-size-adjust: 100%;
     }
     
-    .wrap{max-width:1000px;margin:20px auto;padding:16px}
+    .wrap{max-width:1000px;margin:40px auto;padding:24px}
     
     @media (max-width: 768px) {
       .wrap {
-        padding: 12px;
-        margin: 16px auto;
+        padding: 16px;
+        margin: 20px auto;
       }
     }
     
-    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
     
     @media (max-width: 768px) {
       .card {
-        padding: 14px;
+        padding: 20px;
       }
     }
     
-    .header-section {text-align:center; margin-bottom:20px;}
+    .header-section {text-align:center; margin-bottom:28px;}
     .header-section h1{
-      margin:0 0 8px;font-size:24px;font-weight:700;color:var(--accent);
+      margin:0 0 10px;font-size:30px;font-weight:700;color:var(--accent);
       letter-spacing:.5px;
     }
     .header-divider {
-      width:60px; height:2px;
+      width:80px; height:3px;
       background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      border-radius:3px; margin:0 auto 16px;
+      border-radius:4px; margin:0 auto 20px;
     }
     .header-description {
       margin:0 auto; max-width:600px; color:var(--muted);
-      line-height:1.4; font-size:15px; text-align:center;
+      line-height:1.5; font-size:17px; text-align:center;
     }
     .header-subtitle {
-      margin:8px auto 0; max-width:500px; color:#9da7c2;
-      line-height:1.3; font-size:13px; text-align:center;
+      margin:12px auto 0; max-width:500px; color:#9da7c2;
+      line-height:1.4; font-size:15px; text-align:center;
       font-style:italic;
     }
     
     @media (max-width: 768px){
-      .header-section h1{font-size:22px}
-      .header-description{font-size:14px;}
-      .header-subtitle{font-size:12px;}
+      .header-section h1{font-size:26px}
+      .header-description{font-size:16px; line-height:1.4;}
+      .header-subtitle{font-size:14px;}
     }
     
     .muted{color:var(--muted)}
-    .lang-switch{display:flex;gap:6px;margin:16px 0 20px;justify-content:center;}
+    .lang-switch{display:flex;gap:8px;margin:20px 0 25px;justify-content:center;}
     .lang-switch button{
       background:#0f1a30;border:1px solid var(--border);color:var(--muted);
-      padding:8px 14px;border-radius:999px;cursor:pointer;transition:all 0.2s;
-      font-size:14px;
+      padding:10px 16px;border-radius:999px;cursor:pointer;transition:all 0.2s;
+      font-size:15px;
     }
     
     @media (max-width: 768px) {
       .lang-switch button {
-        padding: 10px 16px;
-        min-height: 40px;
+        padding: 12px 18px;
+        min-height: 44px;
       }
     }
     
     .lang-switch button:hover{background:#1a2740}
     .lang-switch button.active{color:#fff;border-color:var(--accent);box-shadow:0 0 0 2px #0a2030}
-    .hero{margin:6px 0 12px}
-    .hero img{width:100%;height:auto;border-radius:10px;border:1px solid var(--border);display:block}
-    fieldset{border:1px solid var(--border);border-radius:10px;padding:12px;margin:12px 0}
+    .hero{margin:8px 0 16px}
+    .hero img{width:100%;height:auto;border-radius:12px;border:1px solid var(--border);display:block}
+    fieldset{border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0}
     
     @media (max-width: 768px) {
       fieldset {
-        padding: 10px;
-        margin: 10px 0;
+        padding: 14px;
+        margin: 14px 0;
       }
     }
     
-    legend{padding:0 4px;color:var(--muted);font-weight:600;font-size:14px}
-    label{display:block;margin:6px 0;cursor:pointer;padding:4px;border-radius:5px;transition:background 0.2s;font-size:14px}
+    legend{padding:0 6px;color:var(--muted);font-weight:600}
+    label{display:block;margin:8px 0;cursor:pointer;padding:6px;border-radius:6px;transition:background 0.2s}
     
     @media (max-width: 768px) {
       label {
-        padding: 8px;
-        min-height: 40px;
-        margin: 8px 0;
+        padding: 10px;
+        min-height: 44px;
+        margin: 10px 0;
       }
     }
     
     label:hover{background:rgba(25,182,255,0.05)}
     textarea, input[type="text"]{
       width:100%;background:#0f1a30;color:#fff;border:1px solid var(--border);
-      border-radius:8px;padding:8px;font-family:inherit;transition:border 0.2s;font-size:14px
+      border-radius:10px;padding:10px;font-family:inherit;transition:border 0.2s
+    }
+    
+    textarea, input[type="text"] {
+      font-size: 16px;
     }
     
     @media (max-width: 768px) {
       textarea, input[type="text"] {
-        padding: 10px;
-        min-height: 40px;
+        padding: 12px;
+        min-height: 44px;
       }
     }
     
     textarea:focus, input[type="text"]:focus{outline:none;border-color:var(--accent)}
-    .row{display:grid;gap:6px}
-    .actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+    .row{display:grid;gap:8px}
+    .actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
     
     @media (max-width: 768px) {
       .actions {
@@ -123,29 +127,34 @@
     
     .btn{
       background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      color:#00101a;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;
-      font-weight:600;transition:transform 0.2s;min-width:100px;font-size:14px
+      color:#00101a;border:none;padding:12px 18px;border-radius:10px;cursor:pointer;
+      font-weight:600;transition:transform 0.2s;min-width:120px
     }
     
     @media (max-width: 768px) {
       .btn {
-        padding: 12px 18px;
-        min-height: 44px;
+        padding: 16px 20px;
+        min-height: 50px;
         width: 100%;
+        font-size: 17px;
       }
     }
     
     .btn:hover{transform:translateY(-2px)}
     .btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
     .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
-    .note{font-size:12px;color:var(--muted);margin-top:10px}
-    .success{
-      margin-top:16px;padding:12px;border-radius:8px;display:none;
-      font-weight:500;animation:slideIn 0.3s ease-out;font-size:14px
+    .note{font-size:13px;color:var(--muted);margin-top:12px}
+    .success-message {
+      margin-top:20px;padding:14px;border-radius:10px;display:none;
+      font-weight:500;animation:slideIn 0.3s ease-out;
+      background: #0e2a19;
+      color: #9ff3c6;
+      border: 1px solid #1d6b49;
+      text-align: center;
     }
     .error-message {
       color: #ff6b6b;
-      font-size: 13px;
+      font-size: 14px;
       margin-top: 8px;
       padding: 8px;
       background: #2a1212;
@@ -156,8 +165,8 @@
     
     @media (max-width: 768px) {
       .error-message {
-        padding: 10px;
-        margin-top: 10px;
+        padding: 12px;
+        margin-top: 12px;
       }
     }
     
@@ -174,7 +183,7 @@
 <body>
   <div class="wrap">
     <div class="card">
-      <!-- HEADER SECTION COMPACT -->
+      <!-- HEADER SECTION -->
       <div class="header-section">
         <h1 id="main-title">Alegerea logo-ului</h1>
         <div class="header-divider"></div>
@@ -195,15 +204,20 @@
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" loading="lazy" />
       </div>
 
+      <!-- MESAJ DE ERORI -->
       <div id="errorMsg" class="error-message" style="display:none"></div>
 
-      <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field" id="mainForm">
+      <!-- MESAJ DE SUCCES -->
+      <div id="successMsg" class="success-message" style="display:none"></div>
+
+      <!-- FORMULAR NETLIFY -->
+      <form name="logo-vote" method="POST" netlify data-netlify="true" data-netlify-honeypot="bot-field" id="mainForm">
+        <input type="hidden" name="form-name" value="logo-vote" />
+        <input type="hidden" name="lang" id="langField" value="ro" />
+        
         <p style="display:none">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
-        
-        <input type="hidden" name="form-name" value="logo-vote" />
-        <input type="hidden" name="lang" id="langField" value="ro" />
 
         <fieldset>
           <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
@@ -217,7 +231,7 @@
 
         <fieldset>
           <legend id="q2-legend">De ce ai ales acest logo?</legend>
-          <textarea id="reason" name="reason" rows="2" placeholder="Răspuns scurt"></textarea>
+          <textarea id="reason" name="reason" rows="3" placeholder="Răspuns scurt"></textarea>
         </fieldset>
 
         <fieldset>
@@ -274,7 +288,7 @@
         </p>
       </form>
 
-      <div style="text-align:center;margin-top:16px;color:#a9b2cc;font-size:12px;">
+      <div style="text-align:center;margin-top:20px;color:#a9b2cc;font-size:13px;">
         © 2025 <strong>Bughy Tech</strong>
       </div>
     </div>
@@ -289,6 +303,7 @@
     const reasonTextarea = document.getElementById('reason');
     const suggestionsTextarea = document.getElementById('suggestions');
     const errorMsg = document.getElementById('errorMsg');
+    const successMsg = document.getElementById('successMsg');
 
     function detectBrowserLanguage() {
       const browserLang = navigator.language || navigator.userLanguage;
@@ -456,7 +471,8 @@
       return isValid;
     }
 
-    form.addEventListener('submit', async (e) => {
+    // FUNCȚIE SUBMIT CARE AFIȘEAZĂ MESAJ SUCCES PE PAGINĂ
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
       
       if (!validateForm()) {
@@ -467,51 +483,50 @@
       submitBtn.disabled = true;
       submitLabel.textContent = t.submitting;
       
-      let successMsg = document.getElementById('successMsg');
-      if (!successMsg) {
-        successMsg = document.createElement('div');
-        successMsg.id = 'successMsg';
-        successMsg.className = 'success';
-        form.appendChild(successMsg);
-      }
+      // Trimite formularul la Netlify
+      const formData = new FormData(form);
       
-      try {
-        const formData = new FormData(form);
-        
-        const response = await fetch('/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData).toString()
-        });
-        
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString()
+      })
+      .then(response => {
         if (response.ok) {
+          // Afișează mesajul de succes PE PAGINĂ
           successMsg.textContent = t.success;
           successMsg.style.display = 'block';
-          successMsg.style.background = '#0e2a19';
-          successMsg.style.color = '#9ff3c6';
-          successMsg.style.border = '1px solid #1d6b49';
           form.reset();
           errorMsg.style.display = 'none';
           successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          setTimeout(() => successMsg.style.display = 'none', 10000);
+          
+          // Ascunde mesajul după 10 secunde
+          setTimeout(() => {
+            successMsg.style.display = 'none';
+          }, 10000);
         } else {
           throw new Error('Network error');
         }
-      } catch (error) {
+      })
+      .catch(error => {
         successMsg.textContent = t.error;
         successMsg.style.display = 'block';
         successMsg.style.background = '#2a1212';
         successMsg.style.color = '#ffc7c7';
         successMsg.style.border = '1px solid #6b1d1d';
-        setTimeout(() => successMsg.style.display = 'none', 5000);
-      } finally {
+        setTimeout(() => {
+          successMsg.style.display = 'none';
+        }, 5000);
+      })
+      .finally(() => {
         submitBtn.disabled = false;
         submitLabel.textContent = t.submit;
-      }
+      });
     });
 
     document.getElementById('resetLabel').addEventListener('click', function() {
       errorMsg.style.display = 'none';
+      successMsg.style.display = 'none';
       document.querySelectorAll('.field-error').forEach(el => {
         el.classList.remove('field-error');
       });
