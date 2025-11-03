@@ -144,13 +144,9 @@
     .btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
     .btn.secondary{background:#0f1a30;color:#fff;border:1px solid var(--border)}
     .note{font-size:13px;color:var(--muted);margin-top:12px}
-    .success-message {
+    .success{
       margin-top:20px;padding:14px;border-radius:10px;display:none;
-      font-weight:500;animation:slideIn 0.3s ease-out;
-      background: #0e2a19;
-      color: #9ff3c6;
-      border: 1px solid #1d6b49;
-      text-align: center;
+      font-weight:500;animation:slideIn 0.3s ease-out
     }
     .error-message {
       color: #ff6b6b;
@@ -183,7 +179,7 @@
 <body>
   <div class="wrap">
     <div class="card">
-      <!-- HEADER SECTION -->
+      <!-- HEADER SECTION ÎMBUNĂTĂȚIT -->
       <div class="header-section">
         <h1 id="main-title">Alegerea logo-ului</h1>
         <div class="header-divider"></div>
@@ -204,20 +200,15 @@
         <img src="assets/compare.png" alt="Timora PRO vs Flowin" loading="lazy" />
       </div>
 
-      <!-- MESAJ DE ERORI -->
       <div id="errorMsg" class="error-message" style="display:none"></div>
 
-      <!-- MESAJ DE SUCCES -->
-      <div id="successMsg" class="success-message" style="display:none"></div>
-
-      <!-- FORMULAR NETLIFY -->
-      <form name="logo-vote" method="POST" netlify data-netlify="true" data-netlify-honeypot="bot-field" id="mainForm">
-        <input type="hidden" name="form-name" value="logo-vote" />
-        <input type="hidden" name="lang" id="langField" value="ro" />
-        
+      <form name="logo-vote" method="POST" netlify data-netlify-honeypot="bot-field" id="mainForm">
         <p style="display:none">
           <label>Don't fill this out: <input name="bot-field" /></label>
         </p>
+        
+        <input type="hidden" name="form-name" value="logo-vote" />
+        <input type="hidden" name="lang" id="langField" value="ro" />
 
         <fieldset>
           <legend id="q1-legend">Care logo ți se pare mai potrivit?</legend>
@@ -303,7 +294,6 @@
     const reasonTextarea = document.getElementById('reason');
     const suggestionsTextarea = document.getElementById('suggestions');
     const errorMsg = document.getElementById('errorMsg');
-    const successMsg = document.getElementById('successMsg');
 
     function detectBrowserLanguage() {
       const browserLang = navigator.language || navigator.userLanguage;
@@ -471,8 +461,7 @@
       return isValid;
     }
 
-    // FUNCȚIE SUBMIT CARE AFIȘEAZĂ MESAJ SUCCES PE PAGINĂ
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       if (!validateForm()) {
@@ -483,50 +472,51 @@
       submitBtn.disabled = true;
       submitLabel.textContent = t.submitting;
       
-      // Trimite formularul la Netlify
-      const formData = new FormData(form);
+      let successMsg = document.getElementById('successMsg');
+      if (!successMsg) {
+        successMsg = document.createElement('div');
+        successMsg.id = 'successMsg';
+        successMsg.className = 'success';
+        form.appendChild(successMsg);
+      }
       
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
-      })
-      .then(response => {
+      try {
+        const formData = new FormData(form);
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        });
+        
         if (response.ok) {
-          // Afișează mesajul de succes PE PAGINĂ
           successMsg.textContent = t.success;
           successMsg.style.display = 'block';
+          successMsg.style.background = '#0e2a19';
+          successMsg.style.color = '#9ff3c6';
+          successMsg.style.border = '1px solid #1d6b49';
           form.reset();
           errorMsg.style.display = 'none';
           successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          
-          // Ascunde mesajul după 10 secunde
-          setTimeout(() => {
-            successMsg.style.display = 'none';
-          }, 10000);
+          setTimeout(() => successMsg.style.display = 'none', 10000);
         } else {
           throw new Error('Network error');
         }
-      })
-      .catch(error => {
+      } catch (error) {
         successMsg.textContent = t.error;
         successMsg.style.display = 'block';
         successMsg.style.background = '#2a1212';
         successMsg.style.color = '#ffc7c7';
         successMsg.style.border = '1px solid #6b1d1d';
-        setTimeout(() => {
-          successMsg.style.display = 'none';
-        }, 5000);
-      })
-      .finally(() => {
+        setTimeout(() => successMsg.style.display = 'none', 5000);
+      } finally {
         submitBtn.disabled = false;
         submitLabel.textContent = t.submit;
-      });
+      }
     });
 
     document.getElementById('resetLabel').addEventListener('click', function() {
       errorMsg.style.display = 'none';
-      successMsg.style.display = 'none';
       document.querySelectorAll('.field-error').forEach(el => {
         el.classList.remove('field-error');
       });
